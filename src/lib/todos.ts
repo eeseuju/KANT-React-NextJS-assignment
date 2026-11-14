@@ -67,3 +67,23 @@ export function toUpdatePayload(values: TodoFormValues): TodoUpdate {
     due_time: values.due_time === '' ? null : values.due_time,
   };
 }
+
+
+// 주소의 id가 uuid 모양인지 검사 (아니면 DB에 묻지 않고 바로 404 처리)
+// [순수 함수]
+export function isUuid(value: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+    value,
+  );
+}
+
+
+// 만든 시각을 한국 시간으로 보여 줄 문구 (예: 2026. 11. 15. 오후 3:20)
+// [순수 함수]
+export function formatCreatedAt(iso: string): string {
+  return new Date(iso).toLocaleString('ko-KR', {
+    timeZone: 'Asia/Seoul',
+    dateStyle: 'medium',
+    timeStyle: 'short',
+  });
+}

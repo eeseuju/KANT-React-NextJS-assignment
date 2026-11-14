@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { Todo, TodoFormValues } from '@/types/todo';
 import { formatDue } from '@/lib/todos';
 import TodoEditForm from '@/components/TodoEditForm';
@@ -58,7 +59,9 @@ export default function TodoItem({
             todo.done ? 'text-zinc-400 line-through' : 'text-zinc-900'
           }`}
         >
-          {todo.title}
+          <Link href={`/todo/${todo.id}`} className="hover:underline">
+            {todo.title}
+          </Link>
         </p>
         <p className="text-sm text-zinc-500">{formatDue(todo)}</p>
       </div>

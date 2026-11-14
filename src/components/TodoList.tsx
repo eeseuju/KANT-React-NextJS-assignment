@@ -4,6 +4,7 @@ import TodoItem from '@/components/TodoItem';
 
 type TodoListProps = {
   todos: Todo[];
+  emptyMessage: string;
   pendingIds: string[];
   editingId: string | null;
   onToggle: (id: string) => void;
@@ -18,6 +19,7 @@ type TodoListProps = {
 // [고차 함수 사용: map, includes]
 export default function TodoList({
   todos,
+  emptyMessage,
   pendingIds,
   editingId,
   onToggle,
@@ -30,7 +32,7 @@ export default function TodoList({
   if (todos.length === 0) {
     return (
       <p className="rounded-lg border border-dashed border-zinc-300 p-6 text-center text-zinc-500">
-        할 일이 없습니다. 할 일을 추가해 보세요.
+        {emptyMessage}
       </p>
     );
   }

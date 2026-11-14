@@ -24,3 +24,14 @@ export type TodoUpdate = Pick<
   Todo,
   'title' | 'content' | 'due_date' | 'due_time'
 >;
+
+
+// 목록을 어떻게 볼지 정하는 값들 (서버에 저장하지 않음)
+export type TodoFilter = 'all' | 'active' | 'done';
+export type TodoSort = 'created' | 'date';
+
+export type TodoView = {
+  search: string;
+  filter: TodoFilter;
+  sort: TodoSort;
+};

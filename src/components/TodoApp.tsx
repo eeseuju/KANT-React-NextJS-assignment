@@ -1,10 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import type { Todo, TodoFormValues } from '@/types/todo';
+import type { Todo, TodoFormValues, TodoView } from '@/types/todo';
 import TodoForm from '@/components/TodoForm';
 import TodoList from '@/components/TodoList';
-import { toUpdatePayload } from '@/lib/todos';
+import TodoToolbar from '@/components/TodoToolbar';
+import {
+  DEFAULT_VIEW,
+  countDone,
+  getVisibleTodos,
+  toUpdatePayload,
+} from '@/lib/todos';
 import {
   deleteTodo,
   insertTodo,
@@ -20,9 +26,18 @@ type TodoAppProps = {
 
 export default function TodoApp({ initialTodos }: TodoAppProps) {
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
+  const [view, setView] = useState<TodoView>(DEFAULT_VIEW);
   const [pendingIds, setPendingIds] = useState<string[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [error, setError] = useState('');
+
+  // 상태가 아니라 계산으로 얻는 값 (todos, view가 바뀌면 다시 계산된다)
+  const visibleTodos = getVisibleTodos(todos, view);
+  const doneCount = countDone(todos);
+  const emptyMessage =
+    todos.length === 0
+      ? '할 일이 없습니다. 할 일을 추가해 보세요.'
+      : '조건에 맞는 할 일이 없습니다.';
 
   // 요청 중인 항목 표시 켜기/끄기
   // [고차 함수 사용: filter] (상태를 바꾸므로 순수 함수는 아님)
@@ -38,6 +53,10 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
     try {
       const saved = await insertTodo(title);
       setTodos((prev) => [saved, ...prev]);
+      // 새 항목이 지금의 검색·필터에 가려지면 보기 설정을 처음으로 되돌린다
+      if (getVisibleTodos([saved], view).length === 0) {
+        setView(DEFAULT_VIEW);
+      }
       return true;
     } catch (e) {
       console.error(e);
@@ -121,6 +140,13 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
   return (
     <div className="space-y-4">
       <TodoForm onAdd={handleAdd} />
+      <TodoToolbar
+        view={view}
+        totalCount={todos.length}
+        doneCount={doneCount}
+        visibleCount={visibleTodos.length}
+        onChange={setView}
+      />
       {error && (
         <p
           role="alert"
@@ -130,7 +156,8 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
         </p>
       )}
       <TodoList
-        todos={todos}
+        todos={visibleTodos}
+        emptyMessage={emptyMessage}
         pendingIds={pendingIds}
         editingId={editingId}
         onToggle={handleToggle}

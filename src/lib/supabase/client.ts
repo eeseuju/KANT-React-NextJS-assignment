@@ -1,4 +1,4 @@
-import { createBrowserClient } from "@supabase/ssr";
+import { createBrowserClient } from '@supabase/ssr';
 
 // 클라이언트 컴포넌트(use client)에서 쓰는 Supabase 클라이언트
 export function createClient() {

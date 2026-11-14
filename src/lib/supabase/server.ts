@@ -1,5 +1,5 @@
-import { createServerClient } from "@supabase/ssr";
-import { cookies } from "next/headers";
+import { createServerClient } from '@supabase/ssr';
+import { cookies } from 'next/headers';
 
 // 서버 컴포넌트·서버 코드에서 쓰는 Supabase 클라이언트 (로그인 쿠키를 읽는다)
 export async function createClient() {

@@ -1,0 +1,47 @@
+'use client';
+
+import { useState } from 'react';
+import type { FormEvent } from 'react';
+import { TITLE_MAX_LENGTH } from '@/lib/todos';
+
+type TodoFormProps = {
+  onAdd: (title: string) => void;
+};
+
+export default function TodoForm({ onAdd }: TodoFormProps) {
+  const [title, setTitle] = useState('');
+  const [error, setError] = useState('');
+
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    const trimmed = title.trim();
+    if (trimmed === '') {
+      setError('제목을 입력하세요.');
+      return;
+    }
+    onAdd(trimmed);
+    setTitle('');
+    setError('');
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-1">
+      <div className="flex gap-2">
+        <input
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          maxLength={TITLE_MAX_LENGTH}
+          placeholder="할 일을 입력하세요"
+          className="min-w-0 flex-1 rounded-lg border border-zinc-300 px-3 py-2"
+        />
+        <button
+          type="submit"
+          className="shrink-0 rounded-lg bg-green-700 px-4 py-2 font-medium text-white hover:bg-green-800"
+        >
+          추가
+        </button>
+      </div>
+      {error && <p className="text-sm text-red-600">{error}</p>}
+    </form>
+  );
+}

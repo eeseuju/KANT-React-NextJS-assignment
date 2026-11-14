@@ -9,3 +9,18 @@ export type Todo = {
   done: boolean;
   created_at: string;
 };
+
+
+// 수정 입력칸에서 다루는 값 (비어 있는 날짜·시간은 '')
+export type TodoFormValues = {
+  title: string;
+  content: string;
+  due_date: string; // 'YYYY-MM-DD' 또는 ''
+  due_time: string; // 'HH:MM' 또는 ''
+};
+
+// 수정할 때 DB로 보내는 값 (비어 있는 날짜·시간은 null)
+export type TodoUpdate = Pick<
+  Todo,
+  'title' | 'content' | 'due_date' | 'due_time'
+>;

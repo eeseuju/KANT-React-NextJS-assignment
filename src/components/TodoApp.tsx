@@ -1,10 +1,16 @@
 'use client';
 
 import { useState } from 'react';
-import type { Todo } from '@/types/todo';
+import type { Todo, TodoFormValues } from '@/types/todo';
 import TodoForm from '@/components/TodoForm';
 import TodoList from '@/components/TodoList';
-import { deleteTodo, insertTodo, updateTodoDone } from '@/lib/todo-client';
+import { toUpdatePayload } from '@/lib/todos';
+import {
+  deleteTodo,
+  insertTodo,
+  updateTodo,
+  updateTodoDone,
+} from '@/lib/todo-client';
 
 
 type TodoAppProps = {
@@ -15,6 +21,7 @@ type TodoAppProps = {
 export default function TodoApp({ initialTodos }: TodoAppProps) {
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
   const [pendingIds, setPendingIds] = useState<string[]>([]);
+  const [editingId, setEditingId] = useState<string | null>(null);
   const [error, setError] = useState('');
 
   // 요청 중인 항목 표시 켜기/끄기
@@ -81,6 +88,36 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
     }
   }
 
+  // 수정 모드 켜기 (한 번에 한 줄만)
+  function handleEdit(id: string) {
+    setError('');
+    setEditingId(id);
+  }
+
+  // 수정 모드 끄기 (저장하지 않음)
+  function handleCancelEdit() {
+    setEditingId(null);
+  }
+
+  // 수정 저장 (성공하면 true, 실패하면 false → 실패하면 폼이 그대로 남는다)
+  // [고차 함수 사용: map] (상태를 바꾸므로 순수 함수는 아님)
+  async function handleSave(
+    id: string,
+    values: TodoFormValues,
+  ): Promise<boolean> {
+    setError('');
+    try {
+      const saved = await updateTodo(id, toUpdatePayload(values));
+      setTodos((prev) => prev.map((todo) => (todo.id === id ? saved : todo)));
+      setEditingId(null);
+      return true;
+    } catch (e) {
+      console.error(e);
+      setError('수정하지 못했습니다. 다시 시도하세요.');
+      return false;
+    }
+  }
+
   return (
     <div className="space-y-4">
       <TodoForm onAdd={handleAdd} />
@@ -95,8 +132,12 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
       <TodoList
         todos={todos}
         pendingIds={pendingIds}
+        editingId={editingId}
         onToggle={handleToggle}
         onDelete={handleDelete}
+        onEdit={handleEdit}
+        onSave={handleSave}
+        onCancelEdit={handleCancelEdit}
       />
     </div>
   );

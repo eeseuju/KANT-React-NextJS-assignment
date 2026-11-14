@@ -1,5 +1,5 @@
 import { createClient } from '@/lib/supabase/client';
-import type { Todo } from '@/types/todo';
+import type { Todo, TodoUpdate } from '@/types/todo';
 
 
 // 새 할 일을 저장하고, DB가 채워 준 값(id, user_id 등)이 든 한 줄을 돌려받기
@@ -52,4 +52,22 @@ export async function deleteTodo(id: string): Promise<void> {
   if (!data || data.length === 0) {
     throw new Error('삭제할 할 일을 찾지 못했습니다.');
   }
+}
+
+
+// 할 일의 제목·내용·날짜·시간 수정 -> 바뀐 한 줄을 돌려받는다.
+export async function updateTodo(id: string, fields: TodoUpdate): Promise<Todo> {
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from('todos')
+    .update(fields)
+    .eq('id', id)
+    .select()
+    .single<Todo>();
+
+  // 내 것이 아니거나 이미 지워졌으면 data가 없고 error가 온다.
+  if (error || !data) {
+    throw new Error(error?.message ?? '수정 결과가 비어 있습니다.');
+  }
+  return data;
 }

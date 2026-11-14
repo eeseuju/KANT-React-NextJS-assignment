@@ -1,12 +1,16 @@
-import type { Todo } from '@/types/todo';
+import type { Todo, TodoFormValues } from '@/types/todo';
 import TodoItem from '@/components/TodoItem';
 
 
 type TodoListProps = {
   todos: Todo[];
   pendingIds: string[];
+  editingId: string | null;
   onToggle: (id: string) => void;
   onDelete: (id: string) => void;
+  onEdit: (id: string) => void;
+  onSave: (id: string, values: TodoFormValues) => Promise<boolean>;
+  onCancelEdit: () => void;
 };
 
 
@@ -15,8 +19,12 @@ type TodoListProps = {
 export default function TodoList({
   todos,
   pendingIds,
+  editingId,
   onToggle,
   onDelete,
+  onEdit,
+  onSave,
+  onCancelEdit,
 }: TodoListProps) {
   // 빈 데이터 상태
   if (todos.length === 0) {
@@ -34,8 +42,12 @@ export default function TodoList({
           key={todo.id}
           todo={todo}
           pending={pendingIds.includes(todo.id)}
+          editing={editingId === todo.id}
           onToggle={onToggle}
           onDelete={onDelete}
+          onEdit={onEdit}
+          onSave={onSave}
+          onCancelEdit={onCancelEdit}
         />
       ))}
     </ul>

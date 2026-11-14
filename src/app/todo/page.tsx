@@ -37,7 +37,7 @@ const dummyTodos: Todo[] = [
   },
 ];
 
-export default function TodosPage() {
+export default function TodoPage() {
   return (
     <main className="mx-auto max-w-2xl space-y-4 p-6">
       <header className="flex items-center justify-between">

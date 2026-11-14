@@ -49,7 +49,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
         setNotice('확인 메일을 보냈습니다. 메일의 링크를 누른 뒤 로그인하세요.');
         return;
       }
-      router.push('/todos');
+      router.push('/todo');
       router.refresh();
     } finally {
       setLoading(false);

@@ -4,43 +4,100 @@ import { useState } from 'react';
 import type { Todo } from '@/types/todo';
 import TodoForm from '@/components/TodoForm';
 import TodoList from '@/components/TodoList';
+import { deleteTodo, insertTodo, updateTodoDone } from '@/lib/todo-client';
+
 
 type TodoAppProps = {
   initialTodos: Todo[];
 };
 
+
 export default function TodoApp({ initialTodos }: TodoAppProps) {
   const [todos, setTodos] = useState<Todo[]>(initialTodos);
+  const [pendingIds, setPendingIds] = useState<string[]>([]);
+  const [error, setError] = useState('');
 
-  // 임시: 화면 안에서만 바뀐다. U07에서 Supabase 저장으로 교체
-  function handleAdd(title: string) {
-    const newTodo: Todo = {
-      id: crypto.randomUUID(),
-      user_id: 'local',
-      title,
-      content: '',
-      due_date: null,
-      due_time: null,
-      done: false,
-      created_at: new Date().toISOString(),
-    };
-    setTodos((prev) => [newTodo, ...prev]);
-  }
-
-  function handleToggle(id: string) {
-    setTodos((prev) =>
-      prev.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo)),
+  // 요청 중인 항목 표시 켜기/끄기
+  // [고차 함수 사용: filter] (상태를 바꾸므로 순수 함수는 아님)
+  function setPending(id: string, pending: boolean) {
+    setPendingIds((prev) =>
+      pending ? [...prev, id] : prev.filter((pendingId) => pendingId !== id),
     );
   }
 
-  function handleDelete(id: string) {
-    setTodos((prev) => prev.filter((todo) => todo.id !== id));
+  // 새 할 일 저장 (성공하면 true, 실패하면 false)
+  async function handleAdd(title: string): Promise<boolean> {
+    setError('');
+    try {
+      const saved = await insertTodo(title);
+      setTodos((prev) => [saved, ...prev]);
+      return true;
+    } catch (e) {
+      console.error(e);
+      setError('할 일을 추가하지 못했습니다. 다시 시도하세요.');
+      return false;
+    }
+  }
+
+  // 체크 상태 뒤집기 (저장에 성공하면 화면에 반영)
+  // [고차 함수 사용: find, map] (상태를 바꾸므로 순수 함수는 아님)
+  async function handleToggle(id: string) {
+    const target = todos.find((todo) => todo.id === id);
+    if (!target) {
+      return;
+    }
+    const nextDone = !target.done;
+
+    setError('');
+    setPending(id, true);
+    try {
+      await updateTodoDone(id, nextDone);
+      setTodos((prev) =>
+        prev.map((todo) =>
+          todo.id === id ? { ...todo, done: nextDone } : todo,
+        ),
+      );
+    } catch (e) {
+      console.error(e);
+      setError('상태를 바꾸지 못했습니다. 다시 시도하세요.');
+    } finally {
+      setPending(id, false);
+    }
+  }
+
+  // 항목 지우기 (저장에 성공하면 화면에서 제거)
+  // [고차 함수 사용: filter] (상태를 바꾸므로 순수 함수는 아님)
+  async function handleDelete(id: string) {
+    setError('');
+    setPending(id, true);
+    try {
+      await deleteTodo(id);
+      setTodos((prev) => prev.filter((todo) => todo.id !== id));
+    } catch (e) {
+      console.error(e);
+      setError('삭제하지 못했습니다. 다시 시도하세요.');
+    } finally {
+      setPending(id, false);
+    }
   }
 
   return (
     <div className="space-y-4">
       <TodoForm onAdd={handleAdd} />
-      <TodoList todos={todos} onToggle={handleToggle} onDelete={handleDelete} />
+      {error && (
+        <p
+          role="alert"
+          className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+        >
+          {error}
+        </p>
+      )}
+      <TodoList
+        todos={todos}
+        pendingIds={pendingIds}
+        onToggle={handleToggle}
+        onDelete={handleDelete}
+      />
     </div>
   );
 }

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { FormEvent } from 'react';
+import type { SubmitEvent } from 'react';
 import { TITLE_MAX_LENGTH } from '@/lib/todos';
 
 type TodoFormProps = {
@@ -12,7 +12,7 @@ export default function TodoForm({ onAdd }: TodoFormProps) {
   const [title, setTitle] = useState('');
   const [error, setError] = useState('');
 
-  function handleSubmit(e: FormEvent<HTMLFormElement>) {
+  function handleSubmit(e: SubmitEvent<HTMLFormElement>) {
     e.preventDefault();
     const trimmed = title.trim();
     if (trimmed === '') {

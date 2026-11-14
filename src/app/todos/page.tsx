@@ -1,6 +1,8 @@
 import TodoApp from '@/components/TodoApp';
 import type { Todo } from '@/types/todo';
 
+import SignoutButton from '@/components/SignoutButton';
+
 // 임시 더미 데이터 (U06에서 Supabase 조회로 교체)
 const dummyTodos: Todo[] = [
   {
@@ -38,7 +40,10 @@ const dummyTodos: Todo[] = [
 export default function TodosPage() {
   return (
     <main className="mx-auto max-w-2xl space-y-4 p-6">
-      <h1 className="text-2xl font-bold">내 할 일</h1>
+      <header className="flex items-center justify-between">
+        <h1 className="text-2xl font-bold">내 할 일</h1>
+        <SignoutButton />
+      </header>
       <TodoApp initialTodos={dummyTodos} />
     </main>
   );

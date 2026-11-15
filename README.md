@@ -1,7 +1,6 @@
 # Todo (Next.js + Supabase)
 
-React와 Next.js(App Router)로 만든 회원 전용 Todo List입니다.  
-이전에 구현한 [JavaScript 과제에서 만들었던 Todo List](https://github.com/eeseuju/KANT-JavaScript-assignment)를 Next.js로 옮기고, Supabase로 회원가입·로그인과 데이터 저장을 붙였습니다.
+React와 Next.js(App Router)로 만든 회원 전용 Todo List입니다. 이전에 구현한 [JavaScript 과제에서 만들었던 Todo List](https://github.com/eeseuju/KANT-JavaScript-assignment)를 Next.js로 옮기고, Supabase로 회원가입·로그인과 데이터 저장을 붙였습니다.
 
 - 기술 스택 : Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · Supabase (Auth, Postgres, RLS) · Vercel
 
@@ -16,7 +15,7 @@ React와 Next.js(App Router)로 만든 회원 전용 Todo List입니다.
   </tr>
   <tr>
     <td align="center"><img src="docs\screenshots\signin.png" alt="로그인 화면" width="100%"><br>이메일과 비밀번호로 로그인합니다.</td>
-    <td align="center"><img src="docs\screenshots\signup.png" alt="회원가입 화면" width="100%"><br>이메일과 비밀번호로 가입하고, 가입하면 바로 로그인됩니다.</td>
+    <td align="center"><img src="docs\screenshots\signup.png" alt="회원가입 화면" width="100%"><br>이메일과 비밀번호로 가입하면 바로 로그인됩니다.</td>
   </tr>
   <tr>
     <th>할 일 목록 · <code>/todo</code></th>

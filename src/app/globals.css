@@ -45,3 +45,36 @@ body {
     @apply w-full rounded bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/40;
   }
 }
+
+
+/* 완료 체크 때 나타나는 따봉: 화면 가운데에서 커졌다가 위로 떠오르며 사라진다. */
+@keyframes thumb-up {
+  0% {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.5);
+  }
+  30% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -150%) scale(1);
+  }
+}
+
+.thumb-up {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  font-size: 64px;
+  pointer-events: none; /* 클릭을 가로막지 않게 한다. */
+  animation: thumb-up 1s ease-out forwards; /* forwards: 끝난 모양(투명)에서 멈춤 */
+}
+
+/* 움직임을 줄이도록 설정한 사용자에게는 거의 바로 끝낸다. (끝 이벤트는 그대로 발생함) */
+@media (prefers-reduced-motion: reduce) {
+  .thumb-up {
+    animation-duration: 0.01ms;
+  }
+}

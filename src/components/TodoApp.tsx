@@ -6,6 +6,7 @@ import type { Todo, TodoFormValues, TodoView } from '@/types/todo';
 import TodoForm from '@/components/TodoForm';
 import TodoList from '@/components/TodoList';
 import TodoToolbar from '@/components/TodoToolbar';
+import ThumbEffect from '@/components/ThumbEffect';
 import { useToday } from '@/hooks/useToday';
 import {
   DEFAULT_VIEW,
@@ -32,6 +33,8 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
   const [pendingIds, setPendingIds] = useState<string[]>([]);
   const [editingId, setEditingId] = useState<string | null>(null);
   const [error, setError] = useState('');
+  // 따봉 효과: 0이면 안 보이고, 1 이상이면 보이는 중이다. (값이 바뀌면 효과가 처음부터 다시 시작함)
+  const [thumbKey, setThumbKey] = useState(0);
   const today = useToday();
 
   // 상태가 아니라 계산으로 얻는 값: todos, view가 바뀔 때만 다시 계산한다. (useMemo)
@@ -88,6 +91,10 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
             item.id === todo.id ? { ...item, done: nextDone } : item,
           ),
         );
+        // 완료로 바꿨을 때만 따봉을 보여 준다. (값이 바뀌면 효과가 처음부터 다시 시작함)
+        if (nextDone) {
+          setThumbKey((prev) => prev + 1);
+        }
       } catch (e) {
         console.error(e);
         setError('상태를 바꾸지 못했습니다. 다시 시도하세요.');
@@ -149,8 +156,14 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
     [],
   );
 
+  // 따봉 애니메이션이 끝나면 숨긴다.
+  const handleThumbEnd = useCallback(() => {
+    setThumbKey(0);
+  }, []);
+
   return (
     <div className="flex flex-1 flex-col">
+      {thumbKey > 0 && <ThumbEffect key={thumbKey} onEnd={handleThumbEnd} />}
       <TodoForm onAdd={handleAdd} />
       <TodoToolbar
         view={view}

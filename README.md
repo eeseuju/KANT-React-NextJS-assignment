@@ -188,4 +188,4 @@ npm run dev
 
 ### 8-2. 배포 정보
 
-- 배포 주소: https://kant-react-next-js-assignment.vercel.app
+- https://kant-react-next-js-assignment.vercel.app

@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import type { Todo, TodoFormValues } from '@/types/todo';
 import { formatDue } from '@/lib/todos';
+import Icon from '@/components/Icon';
 import TodoEditForm from '@/components/TodoEditForm';
 
 
@@ -29,7 +30,7 @@ export default function TodoItem({
   // 수정 모드: 이 줄을 수정 폼으로 바꿔서 보여 준다.
   if (editing) {
     return (
-      <li className="rounded-lg border border-green-700 bg-white p-3">
+      <li className="border-b border-gray-200 bg-gray-50 px-7 py-4">
         <TodoEditForm
           todo={todo}
           onSave={(values) => onSave(todo.id, values)}
@@ -41,46 +42,63 @@ export default function TodoItem({
 
   return (
     <li
-      className={`flex items-center gap-3 rounded-lg border border-zinc-200 bg-white p-3 ${
+      className={`flex items-start gap-3 border-b border-gray-200 px-7 py-4 hover:bg-gray-50 ${
         pending ? 'opacity-60' : ''
       }`}
     >
-      <input
-        type="checkbox"
-        checked={todo.done}
-        disabled={pending}
-        onChange={() => onToggle(todo.id)}
+      <button
+        type="button"
+        role="checkbox"
+        aria-checked={todo.done}
         aria-label={`${todo.title} 완료`}
-        className="h-5 w-5 shrink-0 accent-green-700"
-      />
+        disabled={pending}
+        onClick={() => onToggle(todo.id)}
+        className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 disabled:cursor-not-allowed ${
+          todo.done
+            ? 'border-brand bg-brand text-white'
+            : 'border-gray-400 hover:border-brand'
+        }`}
+      >
+        {todo.done && <Icon name="check" size={14} />}
+      </button>
+
       <div className="min-w-0 flex-1">
         <p
-          className={`truncate font-medium ${
-            todo.done ? 'text-zinc-400 line-through' : 'text-zinc-900'
+          className={`break-words text-sm ${
+            todo.done ? 'text-gray-400 line-through' : ''
           }`}
         >
           <Link href={`/todo/${todo.id}`} className="hover:underline">
             {todo.title}
           </Link>
         </p>
-        <p className="text-sm text-zinc-500">{formatDue(todo)}</p>
+
+        {/* 날짜 칩과 수정·삭제 버튼을 같은 줄에, 세로 가운데로 맞춘다 */}
+        <div className="mt-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
+          <p className="inline-flex items-center gap-1 rounded-full border border-gray-300 px-2 py-0.5 text-xs text-gray-500">
+            <Icon name="event" size={12} />
+            {formatDue(todo)}
+          </p>
+          <div className="flex shrink-0 gap-2 whitespace-nowrap">
+            <button
+              type="button"
+              disabled={pending}
+              onClick={() => onEdit(todo.id)}
+              className="text-xs text-brand hover:font-bold disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              수정
+            </button>
+            <button
+              type="button"
+              disabled={pending}
+              onClick={() => onDelete(todo.id)}
+              className="text-xs text-danger hover:font-bold disabled:cursor-not-allowed disabled:opacity-50"
+            >
+              삭제
+            </button>
+          </div>
+        </div>
       </div>
-      <button
-        type="button"
-        disabled={pending}
-        onClick={() => onEdit(todo.id)}
-        className="shrink-0 rounded px-2 py-1 text-sm text-zinc-600 hover:bg-zinc-100 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        수정
-      </button>
-      <button
-        type="button"
-        disabled={pending}
-        onClick={() => onDelete(todo.id)}
-        className="shrink-0 rounded px-2 py-1 text-sm text-red-600 hover:bg-red-50 disabled:cursor-not-allowed disabled:opacity-50"
-      >
-        삭제
-      </button>
     </li>
   );
 }

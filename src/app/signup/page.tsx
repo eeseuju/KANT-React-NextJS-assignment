@@ -1,10 +1,15 @@
+import AppCard from '@/components/AppCard';
+import AppHeader from '@/components/AppHeader';
 import AuthForm from '@/components/AuthForm';
+
 
 export default function SignupPage() {
   return (
-    <main className="mx-auto max-w-sm space-y-4 p-6">
-      <h1 className="text-2xl font-bold">회원가입</h1>
-      <AuthForm mode="signup" />
-    </main>
+    <AppCard size="sm">
+      <AppHeader title="회원가입" />
+      <div className="px-7 pb-8">
+        <AuthForm mode="signup" />
+      </div>
+    </AppCard>
   );
 }

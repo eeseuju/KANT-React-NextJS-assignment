@@ -31,14 +31,12 @@ export default function TodoList({
   // 빈 데이터 상태
   if (todos.length === 0) {
     return (
-      <p className="rounded-lg border border-dashed border-zinc-300 p-6 text-center text-zinc-500">
-        {emptyMessage}
-      </p>
+      <p className="py-16 text-center text-sm text-gray-500">{emptyMessage}</p>
     );
   }
 
   return (
-    <ul className="space-y-2">
+    <ul>
       {todos.map((todo) => (
         <TodoItem
           key={todo.id}

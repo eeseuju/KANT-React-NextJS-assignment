@@ -1,5 +1,7 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
+import AppCard from '@/components/AppCard';
+import AppHeader from '@/components/AppHeader';
 import TodoDetail from '@/components/TodoDetail';
 import TodoDetailSkeleton from '@/components/TodoDetailSkeleton';
 
@@ -14,16 +16,16 @@ type TodoDetailPageProps = {
 // 그래서 "목록으로" 링크와 스켈레톤이 정적 껍데기로 바로 보인다.
 export default function TodoDetailPage({ params }: TodoDetailPageProps) {
   return (
-    <main className="mx-auto max-w-2xl space-y-4 p-6">
-      <Link
-        href="/todo"
-        className="inline-block text-sm text-green-700 hover:underline"
-      >
-        ← 목록으로
-      </Link>
+    <AppCard>
+      <AppHeader title="할 일 상세" />
+      <div className="px-7">
+        <Link href="/todo" className="text-sm text-brand hover:underline">
+          ← 목록으로
+        </Link>
+      </div>
       <Suspense fallback={<TodoDetailSkeleton />}>
         <TodoDetail params={params} />
       </Suspense>
-    </main>
+    </AppCard>
   );
 }

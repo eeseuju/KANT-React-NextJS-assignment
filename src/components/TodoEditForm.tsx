@@ -69,7 +69,7 @@ export default function TodoEditForm({
       className="space-y-3"
     >
       <div className="space-y-1">
-        <label htmlFor={`${id}-title`} className="text-sm font-medium">
+        <label htmlFor={`${id}-title`} className="text-xs text-gray-500">
           제목
         </label>
         <input
@@ -78,13 +78,13 @@ export default function TodoEditForm({
           value={values.title}
           onChange={(e) => handleChange('title', e.target.value)}
           maxLength={TITLE_MAX_LENGTH}
-          className="w-full rounded-lg border border-zinc-300 px-3 py-2"
+          className="field"
         />
       </div>
 
       <div className="flex gap-3">
         <div className="min-w-0 flex-1 space-y-1">
-          <label htmlFor={`${id}-date`} className="text-sm font-medium">
+          <label htmlFor={`${id}-date`} className="text-xs text-gray-500">
             날짜
           </label>
           <input
@@ -92,11 +92,11 @@ export default function TodoEditForm({
             type="date"
             value={values.due_date}
             onChange={(e) => handleChange('due_date', e.target.value)}
-            className="w-full rounded-lg border border-zinc-300 px-3 py-2"
+            className="field"
           />
         </div>
         <div className="min-w-0 flex-1 space-y-1">
-          <label htmlFor={`${id}-time`} className="text-sm font-medium">
+          <label htmlFor={`${id}-time`} className="text-xs text-gray-500">
             시간
           </label>
           <input
@@ -104,13 +104,13 @@ export default function TodoEditForm({
             type="time"
             value={values.due_time}
             onChange={(e) => handleChange('due_time', e.target.value)}
-            className="w-full rounded-lg border border-zinc-300 px-3 py-2"
+            className="field"
           />
         </div>
       </div>
 
       <div className="space-y-1">
-        <label htmlFor={`${id}-content`} className="text-sm font-medium">
+        <label htmlFor={`${id}-content`} className="text-xs text-gray-500">
           내용
         </label>
         <textarea
@@ -119,12 +119,12 @@ export default function TodoEditForm({
           onChange={(e) => handleChange('content', e.target.value)}
           maxLength={CONTENT_MAX_LENGTH}
           rows={3}
-          className="w-full rounded-lg border border-zinc-300 px-3 py-2"
+          className="field"
         />
       </div>
 
       {error && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="text-sm text-red-500">
           {error}
         </p>
       )}
@@ -134,14 +134,14 @@ export default function TodoEditForm({
           type="button"
           onClick={onCancel}
           disabled={saving}
-          className="rounded-lg border border-zinc-300 px-4 py-1 text-sm hover:bg-zinc-100 disabled:opacity-50"
+          className="btn btn-outline btn-sm"
         >
           취소
         </button>
         <button
           type="submit"
           disabled={saving}
-          className="rounded-lg bg-green-700 px-4 py-1 text-sm font-medium text-white hover:bg-green-800 disabled:opacity-50"
+          className="btn btn-primary btn-sm"
         >
           {saving ? '저장 중...' : '저장'}
         </button>

@@ -13,34 +13,32 @@ export default async function TodoDetail({ params }: TodoDetailProps) {
   const todo = await getTodo(id);
 
   return (
-    <article className="space-y-4 rounded-lg border border-zinc-200 bg-white p-6">
+    <article className="space-y-5 px-7 pb-8 pt-4">
       <div className="flex items-start justify-between gap-3">
-        <h1 className="break-words text-xl font-bold">{todo.title}</h1>
+        <h2 className="break-words text-lg font-bold">{todo.title}</h2>
         <span
           className={`shrink-0 rounded-full px-3 py-1 text-xs ${
-            todo.done
-              ? 'bg-green-100 text-green-800'
-              : 'bg-zinc-100 text-zinc-600'
+            todo.done ? 'bg-brand text-white' : 'bg-gray-100 text-gray-600'
           }`}
         >
-          {todo.done ? '완료' : '진행 중'}
+          {todo.done ? '완료' : '진행'}
         </span>
       </div>
 
-      <dl className="space-y-3 text-sm">
+      <dl className="space-y-4 text-sm">
         <div>
-          <dt className="text-zinc-500">기한</dt>
-          <dd>{formatDue(todo)}</dd>
+          <dt className="text-xs text-gray-500">기한</dt>
+          <dd className="mt-1">{formatDue(todo)}</dd>
         </div>
         <div>
-          <dt className="text-zinc-500">내용</dt>
-          <dd className="whitespace-pre-wrap break-words">
+          <dt className="text-xs text-gray-500">내용</dt>
+          <dd className="mt-1 whitespace-pre-wrap break-words">
             {todo.content === '' ? '내용이 없습니다.' : todo.content}
           </dd>
         </div>
         <div>
-          <dt className="text-zinc-500">만든 날짜</dt>
-          <dd>{formatCreatedAt(todo.created_at)}</dd>
+          <dt className="text-xs text-gray-500">만든 날짜</dt>
+          <dd className="mt-1">{formatCreatedAt(todo.created_at)}</dd>
         </div>
       </dl>
     </article>

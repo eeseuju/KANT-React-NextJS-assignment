@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 
+
 export default function SignoutButton() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
@@ -32,11 +33,11 @@ export default function SignoutButton() {
         type="button"
         onClick={handleSignout}
         disabled={loading}
-        className="rounded-lg border border-zinc-300 px-3 py-1 text-sm hover:bg-zinc-100 disabled:opacity-50"
+        className="btn btn-outline btn-sm"
       >
         {loading ? '로그아웃 중...' : '로그아웃'}
       </button>
-      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+      {error && <p className="mt-1 text-xs text-red-500">{error}</p>}
     </div>
   );
 }

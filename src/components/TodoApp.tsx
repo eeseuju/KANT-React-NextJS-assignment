@@ -138,7 +138,7 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
   }
 
   return (
-    <div className="space-y-4">
+    <div className="flex flex-1 flex-col">
       <TodoForm onAdd={handleAdd} />
       <TodoToolbar
         view={view}
@@ -150,7 +150,7 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
       {error && (
         <p
           role="alert"
-          className="rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700"
+          className="border-b border-red-100 bg-red-50 px-7 py-2 text-sm text-red-600"
         >
           {error}
         </p>

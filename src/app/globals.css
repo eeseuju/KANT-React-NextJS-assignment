@@ -1,26 +1,47 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+/* 색: 여기서만 정하고, 나머지는 brand / warn / danger 이름으로 쓴다 */
+@theme {
+  --color-brand: #228b22; /* 기본 초록 */
+  --color-warn: #ffa500; /* 지난 날짜 주황 (U12에서 사용) */
+  --color-danger: #f87171; /* 삭제 빨강 */
 }
 
+/* 글꼴: layout.tsx에서 불러온 Noto Sans KR을 기본 글꼴로 쓴다 */
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-noto-sans-kr), sans-serif;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  @apply bg-gray-100 text-gray-900;
+}
+
+/* 여러 곳에서 같이 쓰는 모양 */
+@layer components {
+  /* 둥근 버튼 */
+  .btn {
+    @apply rounded-full px-4 py-2 text-sm disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-sm {
+    @apply px-3 py-1 text-xs;
+  }
+  .btn-primary {
+    @apply bg-brand text-white hover:opacity-90;
+  }
+  .btn-outline {
+    @apply border border-gray-300 text-gray-700 hover:bg-gray-100;
+  }
+
+  /* 상태 필터 칩: 선택(aria-pressed)되면 초록색으로 채운다 */
+  .filter-chip {
+    @apply rounded-full border border-gray-300 px-3 py-1 text-xs text-gray-600 hover:bg-gray-100;
+  }
+  .filter-chip[aria-pressed='true'] {
+    @apply border-brand bg-brand text-white hover:bg-brand;
+  }
+
+  /* 입력칸 (날짜, 시간, 내용 등) */
+  .field {
+    @apply w-full rounded bg-gray-100 px-3 py-2 text-sm outline-none focus:ring-2 focus:ring-brand/40;
+  }
 }

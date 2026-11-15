@@ -7,9 +7,11 @@ import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
 import { getAuthErrorMessage, validateAuthInput } from '@/lib/auth';
 
+
 type AuthFormProps = {
   mode: 'signin' | 'signup';
 };
+
 
 export default function AuthForm({ mode }: AuthFormProps) {
   const router = useRouter();
@@ -57,9 +59,9 @@ export default function AuthForm({ mode }: AuthFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3">
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div className="space-y-1">
-        <label htmlFor="email" className="text-sm font-medium">
+        <label htmlFor="email" className="text-xs text-gray-500">
           이메일
         </label>
         <input
@@ -68,11 +70,11 @@ export default function AuthForm({ mode }: AuthFormProps) {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           autoComplete="email"
-          className="w-full rounded-lg border border-zinc-300 px-3 py-2"
+          className="field"
         />
       </div>
       <div className="space-y-1">
-        <label htmlFor="password" className="text-sm font-medium">
+        <label htmlFor="password" className="text-xs text-gray-500">
           비밀번호
         </label>
         <input
@@ -81,30 +83,30 @@ export default function AuthForm({ mode }: AuthFormProps) {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           autoComplete={isSignup ? 'new-password' : 'current-password'}
-          className="w-full rounded-lg border border-zinc-300 px-3 py-2"
+          className="field"
         />
       </div>
 
       {error && (
-        <p role="alert" className="text-sm text-red-600">
+        <p role="alert" className="text-sm text-red-500">
           {error}
         </p>
       )}
-      {notice && <p className="text-sm text-green-700">{notice}</p>}
+      {notice && <p className="text-sm text-brand">{notice}</p>}
 
       <button
         type="submit"
         disabled={loading}
-        className="w-full rounded-lg bg-green-700 px-4 py-2 font-medium text-white hover:bg-green-800 disabled:opacity-50"
+        className="btn btn-primary w-full"
       >
         {loading ? '처리 중...' : isSignup ? '가입하기' : '로그인'}
       </button>
 
-      <p className="text-center text-sm text-zinc-600">
+      <p className="text-center text-sm text-gray-500">
         {isSignup ? '이미 계정이 있나요? ' : '계정이 없나요? '}
         <Link
           href={isSignup ? '/signin' : '/signup'}
-          className="font-medium text-green-700 underline"
+          className="font-medium text-brand underline"
         >
           {isSignup ? '로그인' : '회원가입'}
         </Link>

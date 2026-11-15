@@ -1,6 +1,8 @@
 'use client';
 
 import { useEffect } from 'react';
+import AppCard from '@/components/AppCard';
+import AppHeader from '@/components/AppHeader';
 
 
 type TodoErrorProps = {
@@ -16,18 +18,18 @@ export default function TodoError({ error, retry }: TodoErrorProps) {
   }, [error]);
 
   return (
-    <div
-      role="alert"
-      className="space-y-3 rounded-lg border border-red-200 bg-red-50 p-6 text-center"
-    >
-      <p className="text-red-700">할 일을 불러오지 못했습니다.</p>
-      <button
-        type="button"
-        onClick={() => retry()}
-        className="rounded-lg border border-red-300 px-4 py-1 text-sm text-red-700 hover:bg-red-100"
-      >
-        다시 시도
-      </button>
-    </div>
+    <AppCard>
+      <AppHeader title="내 할 일" />
+      <div role="alert" className="space-y-3 px-7 py-16 text-center">
+        <p className="text-sm text-gray-600">할 일을 불러오지 못했습니다.</p>
+        <button
+          type="button"
+          onClick={() => retry()}
+          className="btn btn-outline btn-sm"
+        >
+          다시 시도
+        </button>
+      </div>
+    </AppCard>
   );
 }

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import type { SubmitEvent } from 'react';
+import Icon from '@/components/Icon';
 import { TITLE_MAX_LENGTH } from '@/lib/todos';
 
 
@@ -36,24 +37,29 @@ export default function TodoForm({ onAdd }: TodoFormProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-1">
-      <div className="flex gap-2">
+    <form
+      onSubmit={handleSubmit}
+      className="border-b border-gray-200 px-7 py-2"
+    >
+      <div className="flex items-center gap-3">
+        <Icon name="add_task" className="text-brand" />
         <input
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           maxLength={TITLE_MAX_LENGTH}
-          placeholder="할 일을 입력하세요"
-          className="min-w-0 flex-1 rounded-lg border border-zinc-300 px-3 py-2"
+          placeholder="할 일 추가 (Enter로 바로 등록)"
+          aria-label="할 일 제목"
+          className="min-w-0 flex-1 py-2 text-sm outline-none"
         />
         <button
           type="submit"
           disabled={submitting}
-          className="shrink-0 rounded-lg bg-green-700 px-4 py-2 font-medium text-white hover:bg-green-800 disabled:opacity-50"
+          className="btn btn-primary btn-sm shrink-0"
         >
           {submitting ? '추가 중...' : '추가'}
         </button>
       </div>
-      {error && <p className="text-sm text-red-600">{error}</p>}
+      {error && <p className="pb-2 pl-9 text-sm text-red-500">{error}</p>}
     </form>
   );
 }

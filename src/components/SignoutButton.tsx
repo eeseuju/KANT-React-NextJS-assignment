@@ -1,5 +1,6 @@
 'use client';
 
+// [클라이언트 컴포넌트] 클릭 이벤트와 브라우저용 Supabase(로그아웃)를 쓴다.
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';

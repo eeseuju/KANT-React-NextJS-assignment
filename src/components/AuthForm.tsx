@@ -1,5 +1,6 @@
 'use client';
 
+// [클라이언트 컴포넌트] 입력 상태(useState), 제출 이벤트, 페이지 이동(useRouter), 브라우저용 Supabase를 쓴다.
 import { useState } from 'react';
 import type { SubmitEvent } from 'react';
 import Link from 'next/link';
@@ -47,7 +48,7 @@ export default function AuthForm({ mode }: AuthFormProps) {
         return;
       }
       if (!result.data.session) {
-        // 이메일 확인이 켜져 있으면 세션이 바로 생기지 않는다
+        // 이메일 확인이 켜져 있으면 세션이 바로 생기지 않는다.
         setNotice('확인 메일을 보냈습니다. 메일의 링크를 누른 뒤 로그인하세요.');
         return;
       }

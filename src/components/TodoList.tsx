@@ -1,13 +1,16 @@
+// [TodoApp 안에서 쓰이는 컴포넌트] 훅 없이 이벤트 함수를 props로 받아, TodoApp과 같이 브라우저에서 동작한다.
 import type { Todo, TodoFormValues } from '@/types/todo';
+import { isOverdue } from '@/lib/todos';
 import TodoItem from '@/components/TodoItem';
 
 
 type TodoListProps = {
   todos: Todo[];
+  today: string | null;
   emptyMessage: string;
   pendingIds: string[];
   editingId: string | null;
-  onToggle: (id: string) => void;
+  onToggle: (todo: Todo) => void;
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
   onSave: (id: string, values: TodoFormValues) => Promise<boolean>;
@@ -19,6 +22,7 @@ type TodoListProps = {
 // [고차 함수 사용: map, includes]
 export default function TodoList({
   todos,
+  today,
   emptyMessage,
   pendingIds,
   editingId,
@@ -43,6 +47,7 @@ export default function TodoList({
           todo={todo}
           pending={pendingIds.includes(todo.id)}
           editing={editingId === todo.id}
+          overdue={isOverdue(todo, today)}
           onToggle={onToggle}
           onDelete={onDelete}
           onEdit={onEdit}

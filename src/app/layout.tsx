@@ -1,3 +1,4 @@
+// [서버 컴포넌트] 모든 페이지의 틀이다. 글꼴을 서버에서 불러 와 브라우저가 따로 내려받지 않게 한다. (next/font)
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
 import './globals.css';

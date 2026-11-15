@@ -1,5 +1,6 @@
 'use client';
 
+// [클라이언트 컴포넌트] 입력칸 상태(useState)가 필요하다.
 import { useState } from 'react';
 import type { SubmitEvent } from 'react';
 import Icon from '@/components/Icon';

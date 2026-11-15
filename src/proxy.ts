@@ -14,7 +14,7 @@ export async function proxy(request: NextRequest) {
     return response;
   }
 
-  // 이동 응답에도 갱신된 로그인 쿠키를 그대로 붙인다
+  // 이동 응답에도 갱신된 로그인 쿠키를 그대로 붙인다.
   const redirectResponse = NextResponse.redirect(
     new URL(redirectPath, request.url),
   );
@@ -25,7 +25,7 @@ export async function proxy(request: NextRequest) {
 }
 
 
-// proxy가 실행될 주소 (상수여야 한다)
+// proxy가 실행될 주소 (상수여야 함)
 export const config = {
   matcher: ['/todo/:path*', '/signin', '/signup'],
 };

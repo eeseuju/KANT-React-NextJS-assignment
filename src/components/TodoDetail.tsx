@@ -7,7 +7,7 @@ type TodoDetailProps = {
 };
 
 
-// 서버 컴포넌트: 주소의 id를 꺼내 할 일 한 개를 가져와 보여 준다. (읽기 전용)
+// [서버 컴포넌트] 주소의 id를 꺼내 할 일 한 개를 가져와 보여 준다. (읽기 전용)
 export default async function TodoDetail({ params }: TodoDetailProps) {
   const { id } = await params;
   const todo = await getTodo(id);

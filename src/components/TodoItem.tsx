@@ -1,3 +1,5 @@
+// [TodoApp 안에서 쓰이는 컴포넌트] 훅 없이 이벤트 함수를 props로 받아, TodoApp과 같이 브라우저에서 동작한다.
+import { memo } from 'react';
 import Link from 'next/link';
 import type { Todo, TodoFormValues } from '@/types/todo';
 import { formatDue } from '@/lib/todos';
@@ -9,7 +11,8 @@ type TodoItemProps = {
   todo: Todo;
   pending: boolean;
   editing: boolean;
-  onToggle: (id: string) => void;
+  overdue: boolean;
+  onToggle: (todo: Todo) => void;
   onDelete: (id: string) => void;
   onEdit: (id: string) => void;
   onSave: (id: string, values: TodoFormValues) => Promise<boolean>;
@@ -17,10 +20,12 @@ type TodoItemProps = {
 };
 
 
-export default function TodoItem({
+// 할 일 한 줄. 아래에서 memo로 감싸서, 받는 값이 그대로면 다시 그리지 않는다.
+function TodoItem({
   todo,
   pending,
   editing,
+  overdue,
   onToggle,
   onDelete,
   onEdit,
@@ -52,7 +57,7 @@ export default function TodoItem({
         aria-checked={todo.done}
         aria-label={`${todo.title} 완료`}
         disabled={pending}
-        onClick={() => onToggle(todo.id)}
+        onClick={() => onToggle(todo)}
         className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full border-2 disabled:cursor-not-allowed ${
           todo.done
             ? 'border-brand bg-brand text-white'
@@ -73,11 +78,19 @@ export default function TodoItem({
           </Link>
         </p>
 
-        {/* 날짜 칩과 수정·삭제 버튼을 같은 줄에, 세로 가운데로 맞춘다 */}
+        {/* 날짜 칩과 수정·삭제 버튼을 같은 줄에, 세로 가운데로 맞춘다. */}
         <div className="mt-2 flex flex-wrap items-center justify-between gap-x-3 gap-y-1">
-          <p className="inline-flex items-center gap-1 rounded-full border border-gray-300 px-2 py-0.5 text-xs text-gray-500">
+          {/* 기한이 지났으면 주황색 + "지남" 글자 (색만으로 알리지 않음) */}
+          <p
+            className={`inline-flex items-center gap-1 rounded-full border px-2 py-0.5 text-xs ${
+              overdue
+                ? 'border-warn bg-warn/10 text-orange-700'
+                : 'border-gray-300 text-gray-500'
+            }`}
+          >
             <Icon name="event" size={12} />
             {formatDue(todo)}
+            {overdue && <span className="font-medium">· 지남</span>}
           </p>
           <div className="flex shrink-0 gap-2 whitespace-nowrap">
             <button
@@ -102,3 +115,5 @@ export default function TodoItem({
     </li>
   );
 }
+
+export default memo(TodoItem);

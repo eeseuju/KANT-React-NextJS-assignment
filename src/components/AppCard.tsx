@@ -1,3 +1,4 @@
+// [서버 컴포넌트] 상태·이벤트가 없는 틀이라 서버에서 그린다. (브라우저로 가는 JS를 늘리지 않음)
 import type { ReactNode } from 'react';
 
 
@@ -8,7 +9,7 @@ type AppCardProps = {
 
 
 // 회색 배경 위에 놓이는 흰색 둥근 카드 (모든 페이지가 같이 쓰는 틀)
-// 폭을 바꾸고 싶으면 아래 max-w-2xl 을 max-w-xl(좁게) / max-w-3xl(넓게)로 바꾼다
+// 폭을 바꾸고 싶으면 아래 max-w-2xl 을 max-w-xl(좁게) / max-w-3xl(넓게)로 바꾼다.
 export default function AppCard({ children, size = 'md' }: AppCardProps) {
   const sizeClass = size === 'sm' ? 'max-w-sm' : 'min-h-[500px] max-w-2xl';
 

@@ -1,5 +1,6 @@
 'use client';
 
+// [클라이언트 컴포넌트] 입력칸 상태(useState)가 필요하다.
 import { useEffect, useId, useRef, useState } from 'react';
 import type { KeyboardEvent, SubmitEvent } from 'react';
 import type { Todo, TodoFormValues } from '@/types/todo';

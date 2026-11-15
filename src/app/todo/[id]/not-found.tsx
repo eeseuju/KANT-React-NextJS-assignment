@@ -1,3 +1,4 @@
+// [서버 컴포넌트] 보여 주기만 하고 상호작용이 없다.
 import Link from 'next/link';
 import AppCard from '@/components/AppCard';
 import AppHeader from '@/components/AppHeader';

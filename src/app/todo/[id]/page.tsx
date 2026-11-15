@@ -11,7 +11,7 @@ type TodoDetailPageProps = {
 };
 
 
-// 렌더링 방식: 주소의 id(params)와 로그인 쿠키는 요청이 들어와야 아는 값이라,
+// [서버 컴포넌트] 렌더링 방식: 주소의 id(params)와 로그인 쿠키는 요청이 들어와야 아는 값이라,
 // 이 페이지는 params를 기다리지 않고 자식(TodoDetail)에 넘겨 <Suspense> 안에서 읽는다.
 // 그래서 "목록으로" 링크와 스켈레톤이 정적 껍데기로 바로 보인다.
 export default function TodoDetailPage({ params }: TodoDetailPageProps) {

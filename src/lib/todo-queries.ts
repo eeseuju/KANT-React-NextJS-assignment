@@ -4,8 +4,8 @@ import { isUuid } from '@/lib/todos';
 import type { Todo } from '@/types/todo';
 
 
-// 로그인을 확인한 Supabase 클라이언트 만들기 (로그인 안 했으면 /signin으로 보낸다)
-// proxy가 1차로 막지만, 데이터를 읽는 곳에서 한 번 더 확인한다
+// 로그인을 확인한 Supabase 클라이언트 만들기 (로그인 안 했으면 /signin으로 보냄)
+// proxy가 1차로 막지만, 데이터를 읽는 곳에서 한 번 더 확인한다.
 async function createSignedInClient() {
   const supabase = await createClient();
   const { data } = await supabase.auth.getClaims();
@@ -16,7 +16,7 @@ async function createSignedInClient() {
 }
 
 
-// 로그인한 사용자의 할 일을 최신순으로 가져오기 (서버에서만 호출한다)
+// 로그인한 사용자의 할 일을 최신순으로 가져오기 (서버에서만 호출함)
 export async function getTodos(): Promise<Todo[]> {
   const supabase = await createSignedInClient();
 

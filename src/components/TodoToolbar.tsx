@@ -1,5 +1,6 @@
 'use client';
 
+// [클라이언트 컴포넌트] 입력칸 상태(useState)가 필요하다.
 import { useState } from 'react';
 import type { SubmitEvent } from 'react';
 import type { TodoFilter, TodoSort, TodoView } from '@/types/todo';
@@ -31,11 +32,11 @@ export default function TodoToolbar({
   visibleCount,
   onChange,
 }: TodoToolbarProps) {
-  // 입력 중인 검색어: 검색 버튼(또는 Enter)을 눌러야 목록에 적용된다
+  // 입력 중인 검색어: 검색 버튼(또는 Enter)을 눌러야 목록에 적용된다.
   const [draft, setDraft] = useState(view.search);
   const [appliedSearch, setAppliedSearch] = useState(view.search);
 
-  // 부모가 검색어를 바꾼 경우(예: 추가 후 보기 설정 초기화)에는 입력칸도 맞춘다
+  // 부모가 검색어를 바꾼 경우(예: 추가 후 보기 설정 초기화)에는 입력칸도 맞춘다.
   if (view.search !== appliedSearch) {
     setAppliedSearch(view.search);
     setDraft(view.search);
@@ -48,7 +49,7 @@ export default function TodoToolbar({
 
   function handleDraftChange(value: string) {
     setDraft(value);
-    // 입력칸을 모두 지우면 바로 전체 목록으로 돌아간다
+    // 입력칸을 모두 지우면 바로 전체 목록으로 돌아간다.
     if (value === '' && view.search !== '') {
       onChange({ ...view, search: '' });
     }
@@ -63,7 +64,7 @@ export default function TodoToolbar({
         className="flex items-center gap-2"
       >
         {/* 상자 없이 밑줄만 있는 검색칸: 포커스하면 밑줄이 초록색으로 바뀐다.
-            label로 감싸서 줄 어디를 눌러도 입력칸에 커서가 간다 */}
+            label로 감싸서 줄 어디를 눌러도 입력칸에 커서가 간다. */}
         <label className="flex min-w-0 flex-1 items-center gap-2 border-b-2 border-gray-200 py-2 focus-within:border-brand">
           <Icon name="search" size={20} className="text-gray-500" />
           <input
@@ -80,7 +81,7 @@ export default function TodoToolbar({
         </button>
       </form>
 
-      {/* 2번째 줄: 상태 필터 칩 | 개수 + 정렬 선택 (좁으면 줄이 바뀐다) */}
+      {/* 2번째 줄: 상태 필터 칩 | 개수 + 정렬 선택 (좁으면 줄이 바뀜) */}
       <div className="flex flex-wrap items-center justify-between gap-x-3 gap-y-2">
         <div role="group" aria-label="상태 필터" className="flex gap-1">
           {FILTERS.map((item) => (

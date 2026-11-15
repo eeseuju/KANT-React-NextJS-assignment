@@ -1,5 +1,6 @@
 'use client';
 
+// [클라이언트 컴포넌트] 오류 화면(error boundary)은 클라이언트 컴포넌트여야 하고, "다시 시도" 클릭도 처리한다.
 import { useEffect } from 'react';
 import AppCard from '@/components/AppCard';
 import AppHeader from '@/components/AppHeader';

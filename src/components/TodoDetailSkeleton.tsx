@@ -1,3 +1,4 @@
+// [서버 컴포넌트] 정적 껍데기(로딩 화면)에 포함되어 요청 전에 미리 만들어 둔다.
 // 상세 내용이 올 때까지 보여 주는 로딩 화면 (정적 껍데기)
 export default function TodoDetailSkeleton() {
   return (

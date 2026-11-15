@@ -1,13 +1,13 @@
 @import "tailwindcss";
 
-/* 색: 여기서만 정하고, 나머지는 brand / warn / danger 이름으로 쓴다 */
+/* 색: 여기서만 정하고, 나머지는 brand / warn / danger 이름으로 쓴다. */
 @theme {
   --color-brand: #228b22; /* 기본 초록 */
   --color-warn: #ffa500; /* 지난 날짜 주황 (U12에서 사용) */
   --color-danger: #f87171; /* 삭제 빨강 */
 }
 
-/* 글꼴: layout.tsx에서 불러온 Noto Sans KR을 기본 글꼴로 쓴다 */
+/* 글꼴: layout.tsx에서 불러온 Noto Sans KR을 기본 글꼴로 쓴다. */
 @theme inline {
   --font-sans: var(--font-noto-sans-kr), sans-serif;
 }
@@ -32,7 +32,7 @@ body {
     @apply border border-gray-300 text-gray-700 hover:bg-gray-100;
   }
 
-  /* 상태 필터 칩: 선택(aria-pressed)되면 초록색으로 채운다 */
+  /* 상태 필터 칩: 선택(aria-pressed)되면 초록색으로 채운다. */
   .filter-chip {
     @apply rounded-full border border-gray-300 px-3 py-1 text-xs text-gray-600 hover:bg-gray-100;
   }

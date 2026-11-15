@@ -1,3 +1,4 @@
+// [서버 컴포넌트] 로그인 쿠키로 DB를 조회한다. 조회 코드와 키가 브라우저로 가지 않는다.
 import TodoApp from '@/components/TodoApp';
 import { getTodos } from '@/lib/todo-queries';
 

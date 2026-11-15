@@ -145,3 +145,14 @@ export function getVisibleTodos(todos: Todo[], view: TodoView): Todo[] {
 export function countDone(todos: Todo[]): number {
   return todos.reduce((sum, todo) => (todo.done ? sum + 1 : sum), 0);
 }
+
+
+// 기한이 지난 할 일인가? (끝낸 것, 날짜가 없는 것, 오늘을 아직 모르는 경우는 해당 없음)
+// [순수 함수]
+export function isOverdue(todo: Todo, today: string | null): boolean {
+  if (today === null || todo.done || !todo.due_date) {
+    return false;
+  }
+  // 'YYYY-MM-DD' 글자는 글자 순서가 곧 날짜 순서다.
+  return todo.due_date < today;
+}

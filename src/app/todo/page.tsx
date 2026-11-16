@@ -1,6 +1,7 @@
 import { Suspense } from 'react';
 import AppCard from '@/components/AppCard';
 import AppHeader from '@/components/AppHeader';
+import Greeting from '@/components/Greeting';
 import SignoutButton from '@/components/SignoutButton';
 import TodoContent from '@/components/TodoContent';
 import TodoListSkeleton from '@/components/TodoListSkeleton';
@@ -11,7 +12,18 @@ import TodoListSkeleton from '@/components/TodoListSkeleton';
 export default function TodoPage() {
   return (
     <AppCard>
-      <AppHeader title="내 할 일" action={<SignoutButton />} />
+      <AppHeader
+        title="내 할 일"
+        action={
+          <>
+            {/* 쿠키를 읽는 컴포넌트라 Suspense 안에 둔다. */}
+            <Suspense fallback={null}>
+              <Greeting />
+            </Suspense>
+            <SignoutButton />
+          </>
+        }
+      />
       <Suspense fallback={<TodoListSkeleton />}>
         <TodoContent />
       </Suspense>

@@ -58,10 +58,10 @@ export default function TodoApp({ initialTodos }: TodoAppProps) {
   }, []);
 
   // 새 할 일 저장 (성공하면 true, 실패하면 false)
-  const handleAdd = useCallback(async (title: string): Promise<boolean> => {
+  const handleAdd = useCallback(async (values: TodoFormValues): Promise<boolean> => {
     setError('');
     try {
-      const saved = await insertTodo(title);
+      const saved = await insertTodo(toUpdatePayload(values));
       setTodos((prev) => [saved, ...prev]);
       // 새 항목이 지금의 검색·필터에 가려지면 보기 설정을 처음으로 되돌린다.
       setView((prev) =>

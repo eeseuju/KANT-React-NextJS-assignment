@@ -3,11 +3,11 @@ import type { Todo, TodoUpdate } from '@/types/todo';
 
 
 // 새 할 일을 저장하고, DB가 채워 준 값(id, user_id 등)이 든 한 줄을 돌려받기
-export async function insertTodo(title: string): Promise<Todo> {
+export async function insertTodo(values: TodoUpdate): Promise<Todo> {
   const supabase = createClient();
   const { data, error } = await supabase
     .from('todos')
-    .insert({ title })
+    .insert(values)
     .select()
     .single<Todo>();
 

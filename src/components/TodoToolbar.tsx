@@ -57,7 +57,7 @@ export default function TodoToolbar({
 
   return (
     <div className="space-y-5 border-b border-gray-200 px-7 py-4">
-      {/* 1번째 줄: 검색칸 + 검색 버튼 (버튼은 위쪽 "추가" 버튼과 같은 크기·글씨체) */}
+      {/* 1번째 줄: 검색칸 + 검색 버튼 */}
       <form
         role="search"
         onSubmit={handleSearchSubmit}

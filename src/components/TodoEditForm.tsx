@@ -1,32 +1,30 @@
-'use client';
+"use client";
 
 // [클라이언트 컴포넌트] 입력칸 상태(useState)가 필요하다.
-import { useEffect, useId, useRef, useState } from 'react';
-import type { KeyboardEvent, SubmitEvent } from 'react';
-import type { Todo, TodoFormValues } from '@/types/todo';
+import { useEffect, useId, useRef, useState } from "react";
+import type { KeyboardEvent, SubmitEvent } from "react";
+import type { TodoFormValues } from "@/types/todo";
 import {
   CONTENT_MAX_LENGTH,
   TITLE_MAX_LENGTH,
-  toFormValues,
   validateTodoForm,
-} from '@/lib/todos';
+} from "@/lib/todos";
 
-
+// 수정(목록 안)과 추가(모달)에서 같이 쓰는 입력 폼
 type TodoEditFormProps = {
-  todo: Todo;
+  initialValues: TodoFormValues;
   onSave: (values: TodoFormValues) => Promise<boolean>;
   onCancel: () => void;
 };
 
-
 export default function TodoEditForm({
-  todo,
+  initialValues,
   onSave,
   onCancel,
 }: TodoEditFormProps) {
   const id = useId();
-  const [values, setValues] = useState<TodoFormValues>(() => toFormValues(todo));
-  const [error, setError] = useState('');
+  const [values, setValues] = useState<TodoFormValues>(initialValues);
+  const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
   const titleRef = useRef<HTMLInputElement>(null);
 
@@ -41,7 +39,7 @@ export default function TodoEditForm({
   }
 
   function handleKeyDown(e: KeyboardEvent<HTMLFormElement>) {
-    if (e.key === 'Escape') {
+    if (e.key === "Escape") {
       onCancel();
     }
   }
@@ -54,10 +52,12 @@ export default function TodoEditForm({
       return;
     }
 
-    setError('');
+    setError("");
     setSaving(true);
     try {
-      await onSave(values);
+      if (!(await onSave(values))) {
+        setError("저장하지 못했습니다. 다시 시도하세요.");
+      }
     } finally {
       setSaving(false);
     }
@@ -77,7 +77,7 @@ export default function TodoEditForm({
           id={`${id}-title`}
           ref={titleRef}
           value={values.title}
-          onChange={(e) => handleChange('title', e.target.value)}
+          onChange={(e) => handleChange("title", e.target.value)}
           maxLength={TITLE_MAX_LENGTH}
           className="field"
         />
@@ -92,7 +92,7 @@ export default function TodoEditForm({
             id={`${id}-date`}
             type="date"
             value={values.due_date}
-            onChange={(e) => handleChange('due_date', e.target.value)}
+            onChange={(e) => handleChange("due_date", e.target.value)}
             className="field"
           />
         </div>
@@ -104,7 +104,7 @@ export default function TodoEditForm({
             id={`${id}-time`}
             type="time"
             value={values.due_time}
-            onChange={(e) => handleChange('due_time', e.target.value)}
+            onChange={(e) => handleChange("due_time", e.target.value)}
             className="field"
           />
         </div>
@@ -117,7 +117,7 @@ export default function TodoEditForm({
         <textarea
           id={`${id}-content`}
           value={values.content}
-          onChange={(e) => handleChange('content', e.target.value)}
+          onChange={(e) => handleChange("content", e.target.value)}
           maxLength={CONTENT_MAX_LENGTH}
           rows={3}
           className="field"
@@ -144,7 +144,7 @@ export default function TodoEditForm({
           disabled={saving}
           className="btn btn-primary btn-sm"
         >
-          {saving ? '저장 중...' : '저장'}
+          {saving ? "저장 중..." : "저장"}
         </button>
       </div>
     </form>

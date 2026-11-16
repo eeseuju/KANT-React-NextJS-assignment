@@ -1,24 +1,28 @@
-# Todo (Next.js + Supabase)
+# Todo (React · Next.js)
 
-React와 Next.js(App Router)로 만든 회원 전용 Todo List입니다. 이전에 구현한 [JavaScript 과제에서 만들었던 Todo List](https://github.com/eeseuju/KANT-JavaScript-assignment)를 Next.js로 옮기고, Supabase로 회원가입·로그인과 데이터 저장을 붙였습니다.
+React와 Next.js로 만든 회원 전용 Todo App 데모입니다. 이전에 JavaScript 과제로 만들었던 [Todo 웹 문서](https://github.com/eeseuju/KANT-JavaScript-assignment)를 Next.js로 옮기고 Supabase로 회원가입 · 로그인과 데이터 저장을 붙였습니다.
 
-- 기술 스택 : Next.js 16 (App Router) · React 19 · TypeScript · Tailwind CSS 4 · Supabase (Auth, Postgres, RLS) · Vercel
+<br>
+
+> **개발환경**
+> 
+> Next.js · React · TypeScript · Tailwind CSS · Supabase (Auth · Postgres · RLS) · Vercel
 
 <br>
 
 > **목차**
-> - [1. 구성 화면 (라우트)](#1-구성-화면-(라우트))
-> - [2. 주요 기능](#2-주요-기능)
-> - [3. 프로젝트 구조](#3-프로젝트-구조)
-> - [4. 동작 흐름](#4-동작-흐름)
-> - [5. 렌더링 방식 (서버 / 클라이언트)](#5-렌더링-방식-(서버-/-클라이언트))
-> - [6. React Hook 사용 내역](#6-React-Hook-사용-내역)
-> - [7. 데이터 페칭 전략과 성능](#7-데이터-페칭-전략과-성능)
-> - [8. 실행 방법](#8-실행-방법)
+> 1. [구성 화면](#1-구성-화면)
+> 2. [주요 기능](#2-주요-기능)
+> 3. [프로젝트 구조](#3-프로젝트-구조)
+> 4. [동작 흐름](#4-동작-흐름)
+> 5. [렌더링 방식](#5-렌더링-방식)
+> 6. [React Hook](#6-react-hook)
+> 7. [데이터 페칭 전략과 성능](#7-데이터-페칭-전략과-성능)
+> 8. [실행 방법](#8-실행-방법)
 
 <br>
 
-## 1. 구성 화면 (라우트)
+## 1. 구성 화면
 
 <table>
   <tr>
@@ -136,7 +140,7 @@ flowchart LR
 
 <br>
 
-## 5. 렌더링 방식 (서버 / 클라이언트)
+## 5. 렌더링 방식
 
 | 대상 | 종류 | 설명 |
 |---|---|---|
@@ -151,7 +155,7 @@ flowchart LR
 
 <br>
 
-## 6. React Hook 사용 내역
+## 6. React Hook
 
 | 파일 | 사용한 훅 | 규칙 점검 |
 |---|---|---|
@@ -175,7 +179,7 @@ flowchart LR
 
 - **어플리케이션 성능** : 정적 껍데기 + 스트리밍, `memo`·`useMemo`·`useCallback`으로 불필요한 다시 그리기를 줄이고 검색·필터·정렬은 이미 받은 목록에서 브라우저가 처리합니다.  
 
-- **네비게이션 UI/UX**: `Link`로 페이지 전체를 새로 불러오지 않으면서 이동하고, 이동하면 스켈레톤이 바로 보입니다. 상세에는 "← 목록으로" 버튼이 있고, 잘못된 주소는 404 화면으로 안내합니다.
+- **네비게이션 UI / UX** : `Link`로 페이지 전체를 새로 불러오지 않으면서 이동하고, 이동하면 스켈레톤이 바로 보입니다. 상세에는 "← 목록으로" 버튼이 있고, 잘못된 주소는 404 화면으로 안내합니다.
 
 <br>
 

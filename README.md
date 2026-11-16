@@ -163,7 +163,7 @@ flowchart LR
 ## 7. 구현 화면
 
 <p align="center">
-  <img src="docs\demo-nextjs-h.mp4" alt="Todo 웹 문서 시연" width="80%">
+  <img src="demo.gif" alt="Todo App 데모 시연" width="80%">
 </p>
 
 <br>

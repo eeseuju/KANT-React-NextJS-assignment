@@ -163,7 +163,7 @@ flowchart LR
 ## 7. 구현 화면
 
 <p align="center">
-  <img src="docs\demo-nextjs-h.mp4" alt="Todo 웹 문서 시연" width="80%">
+  <img src="demo.gif" alt="Todo 웹 문서 시연" width="80%">
 </p>
 
 <br>
@@ -191,3 +191,5 @@ npm run dev
 ### 8-2. 배포 정보
 
 - https://kant-react-next-js-assignment.vercel.app
+
+  _※ 임시 배포이므로 회원가입 시 이메일 확인을 거치지 않습니다._
